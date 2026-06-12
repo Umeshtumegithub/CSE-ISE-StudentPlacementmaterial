@@ -1,34 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Student StudyHub 2026</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse // Next-Gen Placement Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0b0f19;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        /* Custom Glassmorphism */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(31, 41, 55, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+        }
+        /* Active Sidebar item glow */
+        .active-link {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0) 100%);
+            border-left: 4px solid #6366f1;
+            color: #fff;
+        }
+        /* Animated Background Gradients */
+        .bg-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            right: -100px;
+            z-index: -1;
+            animation: floatGlow 10s infinite alternate;
+        }
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, 50px); }
+        }
+        /* Smooth Fade In */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body>
-<header>
-<h1>Student StudyHub 2026</h1>
-<nav>
-<a href="#courses">Courses</a>
-<a href="#placements">Placements</a>
-</nav>
-</header>
-<section class="hero">
-<h2>Learn • Practice • Get Placed</h2>
-<input id="search" placeholder="Search subject...">
-</section>
-<section id="courses" class="grid">
-<div class="card"><h3>CSE</h3><ul><li>DSA</li><li>DBMS</li><li>OS</li><li>CN</li></ul></div>
-<div class="card"><h3>ISE</h3><ul><li>Web</li><li>AI</li><li>ML</li></ul></div>
-<div class="card"><h3>AIML</h3><ul><li>Python</li><li>Deep Learning</li></ul></div>
-<div class="card"><h3>Data Science</h3><ul><li>Pandas</li><li>Power BI</li></ul></div>
-<div class="card"><h3>Aptitude</h3><ul><li>Quant</li><li>Reasoning</li></ul></div>
-</section>
-<section id="placements">
-<h2>Placement Resources</h2>
-<p>Add YouTube playlists and PDF notes links here.</p>
-</section>
-<script src="script.js"></script>
+<body class="bg-[#0b0f19] min-h-screen flex">
+
+    <div class="bg-glow"></div>
+
+    <aside class="w-72 glass-panel min-h-screen p-6 flex flex-col justify-between hidden md:flex fixed h-full z-50">
+        <div>
+            <div class="flex items-center gap-3 mb-10 px-2">
+                <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse">
+                    <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduPulse</h1>
+                    <span class="text-xs text-indigo-400 font-semibold tracking-wider">2026 PLACEMENT HUB</span>
+                </div>
+            </div>
+
+            <nav class="space-y-2">
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest px-3 mb-3">Core Streams</p>
+                <button onclick="switchTab('cse')" id="btn-cse" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all active-link">
+                    <i class="fa-solid fa-code text-lg"></i>
+                    <span class="font-medium text-sm">Computer Science</span>
+                </button>
+                <button onclick="switchTab('ise')" id="btn-ise" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-network-wired text-lg"></i>
+                    <span class="font-medium text-sm">Information Science</span>
+                </button>
+                <button onclick="switchTab('aiml')" id="btn-aiml" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-brain text-lg"></i>
+                    <span class="font-medium text-sm">AI & Machine Learning</span>
+                </button>
+                <button onclick="switchTab('ds')" id="btn-ds" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-chart-pie text-lg"></i>
+                    <span class="font-medium text-sm">Data Science</span>
+                </button>
+                <button onclick="switchTab('aptitude')" id="btn-aptitude" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-arrow-up-right-dots text-lg"></i>
+                    <span class="font-medium text-sm">Aptitude & Reasoning</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="glass-panel p-4 rounded-xl border border-gray-800">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+                <p class="text-xs text-gray-400 font-medium">Updated for 2026 Recrutiments</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 md:ml-72 p-6 md:p-10 min-h-screen">
+        
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-gray-800">
+            <div>
+                <h2 id="dashboard-title" class="text-3xl font-bold tracking-tight text-white mb-1">Computer Science Dashboard</h2>
+                <p id="dashboard-desc" class="text-gray-400 text-sm">Master your fundamentals, core subjects, and competitive coding architectures.</p>
+            </div>
+            
+            <div class="flex gap-4 w-full md:w-auto">
+                <div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-video text-indigo-400"></i>
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Curated Videos</p>
+                        <p class="text-sm font-bold text-white">140+ Hours</p>
+                    </div>
+                </div>
+                <div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-file-arrow-down text-emerald-400"></i>
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Verified Notes</p>
+                        <p class="text-sm font-bold text-white">Free Downloads</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
+            </div>
+
+    </main>
+
+    <script>
+        const courseData = {
+            cse: {
+                title: "Computer Science & Engineering",
+                desc: "Focus on System Architectures, Software Frameworks, and Algorithmic optimizations vital for FAANG/Product placements.",
+                subjects: [
+                    { name: "Data Structures & Algorithms", icon: "fa-code-branch", color: "indigo", lectures: "42 Videos", link: "https://www.youtube.com/playlist?list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTfi6", noteName: "DSA_Complete_Notes_2026.pdf" },
+                    { name: "Operating Systems (OS)", icon: "fa-sliders", color: "purple", lectures: "24 Videos", link: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p", noteName: "OS_Core_Revision.pdf" },
+                    { name: "Database Management Systems", icon: "fa-database", color: "pink", lectures: "30 Videos", link: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p", noteName: "DBMS_Cheatsheet_SQL.pdf" }
+                ]
+            },
+            ise: {
+                title: "Information Science & Engineering",
+                desc: "Master cloud environments, agile infrastructure networks, and deep information security architecture protocols.",
+                subjects: [
+                    { name: "Computer Networks (CN)", icon: "fa-network-wired", color: "blue", lectures: "28 Videos", link: "https://www.youtube.com/playlist?list=PLBlnK6fEyqrgMCUAG0XRw78UA8qnv6jEx", noteName: "CN_Layer_Breakdown.pdf" },
+                    { name: "Cloud Computing & AWS", icon: "fa-cloud", color: "sky", lectures: "18 Videos", link: "https://www.youtube.com/playlist?list=PLkoX56dfM_Xg6mZitOLe9UscS_2wIsc9C", noteName: "AWS_Cloud_Essentials_2026.pdf" },
+                    { name: "Information & Cyber Security", icon: "fa-shield-halved", color: "emerald", lectures: "22 Videos", link: "https://www.youtube.com/playlist?list=PL9ooVrP1hQOGPQVeZUM5766HC0f2GPDf8", noteName: "CyberSec_Placement_Notes.pdf" }
+                ]
+            },
+            aiml: {
+                title: "Artificial Intelligence & Machine Learning",
+                desc: "2026 Core Tech Stack: Neural Networks, Large Language Models fine-tuning pipelines, and Computer Vision workflows.",
+                subjects: [
+                    { name: "Machine Learning Foundations", icon: "fa-robot", color: "amber", lectures: "35 Videos", link: "https://www.youtube.com/playlist?list=PLbRMhDVUMngdf75WIdI3S7f6_3H6p8V_A", noteName: "ML_Algorithms_Math.pdf" },
+                    { name: "Deep Learning & Neural Nets", icon: "fa-brain", color: "red", lectures: "26 Videos", link: "https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI", noteName: "DL_Backpropagation_Guide.pdf" },
+                    { name: "Natural Language Processing (NLP)", icon: "fa-comments", color: "violet", lectures: "15 Videos", link: "https://www.youtube.com/playlist?list=PLZoTAELRMXVMdJ5sqbCK2LiM06bDJ6FIc", noteName: "Transformers_LLM_Notes.pdf" }
+                ]
+            },
+            ds: {
+                title: "Data Science & Analytics",
+                desc: "Drive commercial value using big data platforms, predictive analytical models, and complex pipeline data mining tools.",
+                subjects: [
+                    { name: "Applied Statistics & Probability", icon: "fa-calculator", color: "teal", lectures: "20 Videos", link: "https://www.youtube.com/playlist?list=PLgUwDviBIf0rGlwtkJ9945Owc87C_Uf0X", noteName: "Stats_For_DataScience.pdf" },
+                    { name: "Data Mining & Data Warehousing", icon: "fa-boxes-stacked", color: "cyan", lectures: "18 Videos", link: "https://www.youtube.com/playlist?list=PLZoTAELRMXVN7QOcjk7XDjQTMYfInY6Xg", noteName: "Data_Mining_Tricks.pdf" },
+                    { name: "Big Data Tools (Spark / Hadoop)", icon: "fa-server", color: "orange", lectures: "25 Videos", link: "https://www.youtube.com/playlist?list=PLeo1K3hjS3uvCeTYTeyfe0-rN5r8zn9rw", noteName: "BigData_Spark_Architecture.pdf" }
+                ]
+            },
+            aptitude: {
+                title: "Aptitude & Logical Reasoning",
+                desc: "Clear your absolute first round elimination filters with advanced numerical tactics, patterns, and dynamic logic tricks.",
+                subjects: [
+                    { name: "Quantitative Aptitude", icon: "fa-percent", color: "rose", lectures: "50 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVA4qXMoQ5vmhefTrukQRt9f", noteName: "Quant_Shortcuts_Formulas.pdf" },
+                    { name: "Logical & Abstract Reasoning", icon: "fa-puzzle-piece", color: "fuchsia", lectures: "30 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVADMKqylI__O_Oqm6MXZgxb", noteName: "Logical_Patterns_Tricks.pdf" },
+                    { name: "Verbal Ability & Coding Decoding", icon: "fa-font", color: "lime", lectures: "15 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVBi3Gst78M7N85H81XmD0L0", noteName: "Verbal_Ability_Bank.pdf" }
+                ]
+            }
+        };
+
+        // Download Prompt Logic Trigger
+        function triggerDownload(fileName) {
+            alert(`📥 Initiating secure system download via EduPulse CDNs for file: \n👉 ${fileName}\n\n[In production environment, this link hooks to your AWS S3 buckets or local system directories]`);
+        }
+
+        // Active tab render manager
+        function switchTab(streamKey) {
+            // Update Active Styling on Sidebar Menu Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active-link'));
+            document.getElementById(`btn-${streamKey}`).classList.add('active-link');
+
+            const currentData = courseData[streamKey];
+
+            // Render Header texts dynamic changes
+            document.getElementById('dashboard-title').innerText = currentData.title + " Dashboard";
+            document.getElementById('dashboard-desc').innerText = currentData.desc;
+
+            // Render Dynamic Cards layout
+            const container = document.getElementById('cards-container');
+            
+            // Fast CSS Refresh Trigger reset animation loop 
+            container.classList.remove('fade-in');
+            void container.offsetWidth; 
+            container.classList.add('fade-in');
+
+            container.innerHTML = ""; // Wipe content clean safely
+
+            currentData.subjects.forEach(subj => {
+                const cardHTML = `
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-[280px]">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-3 bg-gray-800/80 rounded-xl border border-gray-700/50">
+                                    <i class="fa-solid ${subj.icon} text-xl text-indigo-400"></i>
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                                    ${subj.lectures}
+                                </span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-2">${subj.name}</h3>
+                            <p class="text-xs text-gray-400">Essential core principles structured explicitly for 2026 tech evaluation benchmarks.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-800/80">
+                            <a href="${subj.link}" target="_blank" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-indigo-600/10">
+                                <i class="fa-solid fa-play"></i> Watch Lectures
+                            </a>
+                            <button onclick="triggerDownload('${subj.noteName}')" class="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold py-2.5 px-4 rounded-xl border border-gray-700 transition-all">
+                                <i class="fa-solid fa-download text-emerald-400"></i> Get Notes PDF
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Initialize Application Content Load State on default profile selection 
+        window.onload = () => {
+            switchTab('cse');
+        };
+    </script>
 </body>
 </html>
