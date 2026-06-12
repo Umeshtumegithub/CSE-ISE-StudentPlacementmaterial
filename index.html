@@ -3,245 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduPulse // Next-Gen Placement Dashboard</title>
+    <title>EduPulse // Premium Placement Ecosystem</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0b0f19;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .theme-dark {
+            background-color: #080c14;
             color: #f3f4f6;
-            overflow-x: hidden;
         }
-        /* Custom Glassmorphism */
+
+        .theme-light {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
         .glass-panel {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
+        .theme-dark .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .theme-light .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+
         .glass-card {
-            background: rgba(31, 41, 55, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .theme-dark .glass-card {
+            background: rgba(22, 30, 49, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .theme-light .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02);
         }
         .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.25);
         }
-        /* Active Sidebar item glow */
+
+        .glow-cse:hover { border-color: #6366f1; }
+        .glow-ise:hover { border-color: #3b82f6; }
+        .glow-aiml:hover { border-color: #a855f7; }
+        .glow-ds:hover { border-color: #06b6d4; }
+        .glow-aptitude:hover { border-color: #f43f5e; }
+
         .active-link {
-            background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0) 100%);
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 100%);
             border-left: 4px solid #6366f1;
-            color: #fff;
+            font-weight: 600;
         }
-        /* Animated Background Gradients */
-        .bg-glow {
+        .theme-dark .active-link { color: #ffffff; }
+        .theme-light .active-link { color: #4f46e5; background: linear-gradient(90deg, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0) 100%); }
+
+        .bg-glow-orb {
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0,0,0,0) 70%);
-            top: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
             right: -100px;
             z-index: -1;
-            animation: floatGlow 10s infinite alternate;
+            animation: floatGlow 12s infinite alternate ease-in-out;
         }
         @keyframes floatGlow {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-50px, 50px); }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, 40px) scale(1.1); }
         }
-        /* Smooth Fade In */
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="bg-[#0b0f19] min-h-screen flex">
+<body class="theme-dark min-h-screen flex flex-col md:flex-row antialiased">
 
-    <div class="bg-glow"></div>
+    <div class="bg-glow-orb"></div>
 
-    <aside class="w-72 glass-panel min-h-screen p-6 flex flex-col justify-between hidden md:flex fixed h-full z-50">
+    <!-- SIDEBAR NAVIGATION CONTAINER -->
+    <aside class="w-full md:w-72 glass-panel p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r fixed h-auto md:h-full z-50">
         <div>
-            <div class="flex items-center gap-3 mb-10 px-2">
-                <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30 animate-pulse">
-                    <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+            <!-- Branding element -->
+            <div class="flex items-center justify-between mb-6 md:mb-10 px-2">
+                <div class="flex items-center gap-3">
+                    <div class="h-11 w-11 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl flex items-center justify-center shadow-md shadow-indigo-500/20">
+                        <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">EduPulse</h1>
+                        <span class="text-[10px] text-indigo-400 font-bold tracking-widest block">2026 PLACEMENT HUB</span>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">EduPulse</h1>
-                    <span class="text-xs text-indigo-400 font-semibold tracking-wider">2026 PLACEMENT HUB</span>
-                </div>
+                
+                <!-- Theme switch element -->
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-gray-800/40 hover:bg-gray-700/50 border border-gray-700/50 transition-all text-amber-400" id="theme-icon">
+                    <i class="fa-solid fa-moon text-md"></i>
+                </button>
             </div>
 
-            <nav class="space-y-2">
-                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest px-3 mb-3">Core Streams</p>
-                <button onclick="switchTab('cse')" id="btn-cse" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all active-link">
-                    <i class="fa-solid fa-code text-lg"></i>
-                    <span class="font-medium text-sm">Computer Science</span>
+            <!-- Platform navigation links -->
+            <nav class="space-y-1.5 hidden md:block" id="sidebar-nav">
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-widest px-3 mb-3">Academic Blueprints</p>
+                <button onclick="switchTab('cse')" id="btn-cse" class="tab-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all active-link">
+                    <i class="fa-solid fa-code text-md text-indigo-500"></i>
+                    <span class="text-sm font-medium">Computer Science</span>
                 </button>
-                <button onclick="switchTab('ise')" id="btn-ise" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-network-wired text-lg"></i>
-                    <span class="font-medium text-sm">Information Science</span>
+                <button onclick="switchTab('ise')" id="btn-ise" class="tab-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-network-wired text-md text-blue-500"></i>
+                    <span class="text-sm font-medium">Information Science</span>
                 </button>
-                <button onclick="switchTab('aiml')" id="btn-aiml" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-brain text-lg"></i>
-                    <span class="font-medium text-sm">AI & Machine Learning</span>
+                <button onclick="switchTab('aiml')" id="btn-aiml" class="tab-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-brain text-md text-purple-500"></i>
+                    <span class="text-sm font-medium">AI & Machine Learning</span>
                 </button>
-                <button onclick="switchTab('ds')" id="btn-ds" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-chart-pie text-lg"></i>
-                    <span class="font-medium text-sm">Data Science</span>
+                <button onclick="switchTab('ds')" id="btn-ds" class="tab-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-chart-pie text-md text-cyan-500"></i>
+                    <span class="text-sm font-medium">Data Science</span>
                 </button>
-                <button onclick="switchTab('aptitude')" id="btn-aptitude" class="tab-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-arrow-up-right-dots text-lg"></i>
-                    <span class="font-medium text-sm">Aptitude & Reasoning</span>
+                <button onclick="switchTab('aptitude')" id="btn-aptitude" class="tab-btn w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-arrow-up-right-dots text-md text-rose-500"></i>
+                    <span class="text-sm font-medium">Aptitude & Reasoning</span>
                 </button>
             </nav>
         </div>
 
-        <div class="glass-panel p-4 rounded-xl border border-gray-800">
+        <div class="glass-panel p-4 rounded-xl border hidden md:block">
             <div class="flex items-center gap-3">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
-                <p class="text-xs text-gray-400 font-medium">Updated for 2026 Recrutiments</p>
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <p class="text-xs text-gray-400 font-medium tracking-wide">Sync Live // Premium Curations</p>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 md:ml-72 p-6 md:p-10 min-h-screen">
+    <!-- MOBILE NAVIGATION BOTTOM MENU -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t p-2 flex justify-around z-50">
+        <button onclick="switchTab('cse')" class="flex flex-col items-center gap-1 p-2 text-indigo-400"><i class="fa-solid fa-code text-lg"></i><span class="text-[10px]">CSE</span></button>
+        <button onclick="switchTab('ise')" class="flex flex-col items-center gap-1 p-2 text-gray-400"><i class="fa-solid fa-network-wired text-lg"></i><span class="text-[10px]">ISE</span></button>
+        <button onclick="switchTab('aiml')" class="flex flex-col items-center gap-1 p-2 text-gray-400"><i class="fa-solid fa-brain text-lg"></i><span class="text-[10px]">AIML</span></button>
+        <button onclick="switchTab('ds')" class="flex flex-col items-center gap-1 p-2 text-gray-400"><i class="fa-solid fa-chart-pie text-lg"></i><span class="text-[10px]">DataSci</span></button>
+        <button onclick="switchTab('aptitude')" class="flex flex-col items-center gap-1 p-2 text-gray-400"><i class="fa-solid fa-arrow-up-right-dots text-lg"></i><span class="text-[10px]">Aptitude</span></button>
+    </div>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <main class="flex-1 md:ml-72 p-6 md:p-10 pt-28 md:pt-10 pb-24 md:pb-10 min-h-screen">
         
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-gray-800">
+        <!-- MODULE HEADER BLOCK -->
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 pb-6 border-b border-gray-800/60">
             <div>
-                <h2 id="dashboard-title" class="text-3xl font-bold tracking-tight text-white mb-1">Computer Science Dashboard</h2>
-                <p id="dashboard-desc" class="text-gray-400 text-sm">Master your fundamentals, core subjects, and competitive coding architectures.</p>
+                <div class="flex items-center gap-2 mb-1.5">
+                    <span id="stream-tag" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Computer Science</span>
+                </div>
+                <h2 id="dashboard-title" class="text-3xl font-extrabold tracking-tight mb-1.5">Computer Science Dashboard</h2>
+                <p id="dashboard-desc" class="text-gray-400 text-sm max-w-2xl">Master structural complexities and algorithmic optimization using top curated channels.</p>
             </div>
             
-            <div class="flex gap-4 w-full md:w-auto">
-                <div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-3">
-                    <i class="fa-solid fa-video text-indigo-400"></i>
+            <div class="flex items-center gap-4 w-full lg:w-auto">
+                <div class="glass-panel px-4 py-2.5 rounded-xl flex items-center gap-3.5 flex-1 lg:flex-initial">
+                    <div class="h-9 w-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-circle-play"></i></div>
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Curated Videos</p>
-                        <p class="text-sm font-bold text-white">140+ Hours</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Video Assets</p>
+                        <p class="text-sm font-bold" id="metric-videos">Premium Playlists</p>
                     </div>
                 </div>
-                <div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-3">
-                    <i class="fa-solid fa-file-arrow-down text-emerald-400"></i>
+                <div class="glass-panel px-4 py-2.5 rounded-xl flex items-center gap-3.5 flex-1 lg:flex-initial">
+                    <div class="h-9 w-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-cloud-arrow-down"></i></div>
                     <div>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Verified Notes</p>
-                        <p class="text-sm font-bold text-white">Free Downloads</p>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Documentation</p>
+                        <p class="text-sm font-bold">Direct Downloads</p>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
-            </div>
+        <!-- DYNAMIC COURSE CONTENT CONTAINER -->
+        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in-up">
+            <!-- Programmatic JavaScript injections load here -->
+        </div>
 
     </main>
 
+    <!-- DATA ARRAYS AND APP LOGIC -->
     <script>
         const courseData = {
             cse: {
                 title: "Computer Science & Engineering",
-                desc: "Focus on System Architectures, Software Frameworks, and Algorithmic optimizations vital for FAANG/Product placements.",
+                tag: "Core Engineering",
+                colorKey: "cse",
+                desc: "High-yield execution structures, software frameworks, operational architectures, and clean algorithmic code optimization models.",
                 subjects: [
-                    { name: "Data Structures & Algorithms", icon: "fa-code-branch", color: "indigo", lectures: "42 Videos", link: "https://www.youtube.com/playlist?list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTfi6", noteName: "DSA_Complete_Notes_2026.pdf" },
-                    { name: "Operating Systems (OS)", icon: "fa-sliders", color: "purple", lectures: "24 Videos", link: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p", noteName: "OS_Core_Revision.pdf" },
-                    { name: "Database Management Systems", icon: "fa-database", color: "pink", lectures: "30 Videos", link: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p", noteName: "DBMS_Cheatsheet_SQL.pdf" }
+                    { name: "Data Structures & Algorithms (Striver)", icon: "fa-code-branch", author: "takeUforward", gfgLink: "https://www.geeksforgeeks.org/data-structures/", video: "https://www.youtube.com/playlist?list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz", noteName: "Striver_DSA_Sheet_Notes.pdf" },
+                    { name: "Operating Systems (OS)", icon: "fa-sliders", author: "Gate Smashers", gfgLink: "https://www.geeksforgeeks.org/operating-systems/", video: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p", noteName: "GateSmashers_OS_Revision.pdf" },
+                    { name: "Database Management Systems (DBMS)", icon: "fa-database", author: "Jenny's Lectures", gfgLink: "https://www.geeksforgeeks.org/dbms/", video: "https://www.youtube.com/playlist?list=PL5gZPLVLgXNldf09I8e8wT64KshbUtn5o", noteName: "DBMS_SQL_Normalisation_Notes.pdf" },
+                    { name: "Object-Oriented Programming (OOPs)", icon: "fa-cubes", author: "Love Babbar", gfgLink: "https://www.geeksforgeeks.org/object-oriented-programming-in-cpp/", video: "https://www.youtube.com/playlist?list=PLDzeHZWIZsTryvt796HDwk8yILxvZne92", noteName: "OOPS_Placement_Conceps.pdf" },
+                    { name: "System Design (HLD & LLD)", icon: "fa-diagram-project", author: "Gaurav Sen", gfgLink: "https://www.geeksforgeeks.org/system-design-tutorial/", video: "https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvXZ", noteName: "System_Design_Blueprint.pdf" }
                 ]
             },
             ise: {
                 title: "Information Science & Engineering",
-                desc: "Master cloud environments, agile infrastructure networks, and deep information security architecture protocols.",
+                tag: "Infrastructure & Security",
+                colorKey: "ise",
+                desc: "Distributed networks, structural data encryption management frameworks, and cloud systems platform engineering.",
                 subjects: [
-                    { name: "Computer Networks (CN)", icon: "fa-network-wired", color: "blue", lectures: "28 Videos", link: "https://www.youtube.com/playlist?list=PLBlnK6fEyqrgMCUAG0XRw78UA8qnv6jEx", noteName: "CN_Layer_Breakdown.pdf" },
-                    { name: "Cloud Computing & AWS", icon: "fa-cloud", color: "sky", lectures: "18 Videos", link: "https://www.youtube.com/playlist?list=PLkoX56dfM_Xg6mZitOLe9UscS_2wIsc9C", noteName: "AWS_Cloud_Essentials_2026.pdf" },
-                    { name: "Information & Cyber Security", icon: "fa-shield-halved", color: "emerald", lectures: "22 Videos", link: "https://www.youtube.com/playlist?list=PL9ooVrP1hQOGPQVeZUM5766HC0f2GPDf8", noteName: "CyberSec_Placement_Notes.pdf" }
+                    { name: "Computer Networks (CN)", icon: "fa-network-wired", author: "Gate Smashers", gfgLink: "https://www.geeksforgeeks.org/computer-network-tutorials/", video: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGFBD2-2joCpWOLUrDLvVV_", noteName: "CN_OSI_TCP_Complete_Notes.pdf" },
+                    { name: "Cryptography & Network Security", icon: "fa-shield-halved", author: "Neso Academy", gfgLink: "https://www.geeksforgeeks.org/cryptography-tutorials/", video: "https://www.youtube.com/playlist?list=PLBlnK6fEyqrgj_sP8LnoH9Te0_bAUPfS1", noteName: "Cryptography_Handwritten_Notes.pdf" },
+                    { name: "Cloud Computing & AWS Architecture", icon: "fa-cloud", author: "FreeCodeCamp", gfgLink: "https://www.geeksforgeeks.org/cloud-computing-tutorials/", video: "https://www.youtube.com/watch?v=48_4_vX6vO0", noteName: "AWS_Cloud_Architect_Guide.pdf" },
+                    { name: "Software Engineering & Agile Lifecycle", icon: "fa-rectangle-list", author: "Gate Smashers", gfgLink: "https://www.geeksforgeeks.org/software-engineering-tutorial/", video: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiEed7NVHyO96EpgDc9eZqI0", noteName: "Agile_SDLC_Core_Review.pdf" }
                 ]
             },
             aiml: {
                 title: "Artificial Intelligence & Machine Learning",
-                desc: "2026 Core Tech Stack: Neural Networks, Large Language Models fine-tuning pipelines, and Computer Vision workflows.",
+                tag: "Intelligent Systems",
+                colorKey: "aiml",
+                desc: "Algorithmic statistical modeling processes, matrix transformations, neural processing units, and predictive deep learning loops.",
                 subjects: [
-                    { name: "Machine Learning Foundations", icon: "fa-robot", color: "amber", lectures: "35 Videos", link: "https://www.youtube.com/playlist?list=PLbRMhDVUMngdf75WIdI3S7f6_3H6p8V_A", noteName: "ML_Algorithms_Math.pdf" },
-                    { name: "Deep Learning & Neural Nets", icon: "fa-brain", color: "red", lectures: "26 Videos", link: "https://www.youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI", noteName: "DL_Backpropagation_Guide.pdf" },
-                    { name: "Natural Language Processing (NLP)", icon: "fa-comments", color: "violet", lectures: "15 Videos", link: "https://www.youtube.com/playlist?list=PLZoTAELRMXVMdJ5sqbCK2LiM06bDJ6FIc", noteName: "Transformers_LLM_Notes.pdf" }
+                    { name: "Machine Learning (Complete Path)", icon: "fa-robot", author: "Krish Naik", gfgLink: "https://www.geeksforgeeks.org/machine-learning/", video: "https://www.youtube.com/playlist?list=PLZoTAELRMXVPBTrWtJkn3wKgpRqmMANbE", noteName: "ML_Algorithms_Math_Sheets.pdf" },
+                    { name: "Deep Learning with Tutorials", icon: "fa-brain", author: "Krish Naik", gfgLink: "https://www.geeksforgeeks.org/introduction-deep-learning/", video: "https://www.youtube.com/playlist?list=PLZoTAELRMXVOMo_vN4G0tI7mPZpIEAn8n", noteName: "ANN_CNN_RNN_Deep_Dive.pdf" },
+                    { name: "Natural Language Processing (NLP)", icon: "fa-comments", author: "CampusX", gfgLink: "https://www.geeksforgeeks.org/large-language-models-llms/", video: "https://www.youtube.com/playlist?list=PLKnIAqAhKV6ls6fA87Z_W9_8390XmGidV", noteName: "Transformers_Attention_Architectures.pdf" },
+                    { name: "Neural Networks & Generative AI", icon: "fa-eye", author: "Andrej Karpathy", gfgLink: "https://www.geeksforgeeks.org/generative-ai/", video: "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhDcKZ", noteName: "Karpathy_Building_GPT_From_Scratch.pdf" }
                 ]
             },
             ds: {
                 title: "Data Science & Analytics",
-                desc: "Drive commercial value using big data platforms, predictive analytical models, and complex pipeline data mining tools.",
+                tag: "Data Assets Strategy",
+                colorKey: "ds",
+                desc: "Big data mining architectures, inferential predictive analytics, pattern recognition metrics, and data structures engineering.",
                 subjects: [
-                    { name: "Applied Statistics & Probability", icon: "fa-calculator", color: "teal", lectures: "20 Videos", link: "https://www.youtube.com/playlist?list=PLgUwDviBIf0rGlwtkJ9945Owc87C_Uf0X", noteName: "Stats_For_DataScience.pdf" },
-                    { name: "Data Mining & Data Warehousing", icon: "fa-boxes-stacked", color: "cyan", lectures: "18 Videos", link: "https://www.youtube.com/playlist?list=PLZoTAELRMXVN7QOcjk7XDjQTMYfInY6Xg", noteName: "Data_Mining_Tricks.pdf" },
-                    { name: "Big Data Tools (Spark / Hadoop)", icon: "fa-server", color: "orange", lectures: "25 Videos", link: "https://www.youtube.com/playlist?list=PLeo1K3hjS3uvCeTYTeyfe0-rN5r8zn9rw", noteName: "BigData_Spark_Architecture.pdf" }
+                    { name: "Statistics for Data Science", icon: "fa-calculator", author: "Krish Naik", gfgLink: "https://www.geeksforgeeks.org/mathematics-probability-and-statistics/", video: "https://www.youtube.com/playlist?list=PLZoTAELRMXVMhVyr3Ri9IQ-t5QPB7z_st", noteName: "Inferential_Stats_Formula_Book.pdf" },
+                    { name: "Complete Python Data Analysis Library", icon: "fa-chart-line", author: "Keith Galli", gfgLink: "https://www.geeksforgeeks.org/data-science-with-python-tutorial/", video: "https://www.youtube.com/watch?v=vmEHCJofslg", noteName: "Pandas_Numpy_Cheatsheet.pdf" },
+                    { name: "Big Data Processing Ecosystem (Spark)", icon: "fa-gears", author: "Codebasics", gfgLink: "https://www.geeksforgeeks.org/apache-spark-tutorial/", video: "https://www.youtube.com/playlist?list=PLeo1K3hjS3uvCeTYTeyfe0-rN5r8zn9rw", noteName: "Hadoop_Spark_Distributed_Systems.pdf" },
+                    { name: "Data Extraction & SQL for Analytics", icon: "fa-table-list", author: "Luke Barousse", gfgLink: "https://www.geeksforgeeks.org/sql-tutorial/", video: "https://www.youtube.com/playlist?list=PL7ZHlOLKkaO_X4f_vNdf4Z8W8U827KmbO", noteName: "Advanced_SQL_Queries_Hacks.pdf" }
                 ]
             },
             aptitude: {
                 title: "Aptitude & Logical Reasoning",
-                desc: "Clear your absolute first round elimination filters with advanced numerical tactics, patterns, and dynamic logic tricks.",
+                tag: "Elimination Gateways",
+                colorKey: "aptitude",
+                desc: "Advanced logical deduction templates, fast calculation short tricks, and analytical reasoning techniques for clearing Round 1 filters.",
                 subjects: [
-                    { name: "Quantitative Aptitude", icon: "fa-percent", color: "rose", lectures: "50 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVA4qXMoQ5vmhefTrukQRt9f", noteName: "Quant_Shortcuts_Formulas.pdf" },
-                    { name: "Logical & Abstract Reasoning", icon: "fa-puzzle-piece", color: "fuchsia", lectures: "30 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVADMKqylI__O_Oqm6MXZgxb", noteName: "Logical_Patterns_Tricks.pdf" },
-                    { name: "Verbal Ability & Coding Decoding", icon: "fa-font", color: "lime", lectures: "15 Videos", link: "https://www.youtube.com/playlist?list=PLpyc33gOcbVBi3Gst78M7N85H81XmD0L0", noteName: "Verbal_Ability_Bank.pdf" }
+                    { name: "Quantitative Aptitude Mastery", icon: "fa-percent", author: "Feel Free to Learn", gfgLink: "https://www.geeksforgeeks.org/quantitative-aptitude-gfg/", video: "https://www.youtube.com/playlist?list=PLpyc33gOcbVA4qXMoQ5vmhefTrukQRt9f", noteName: "Quant_TimeSpeedDistance_Shortcuts.pdf" },
+                    { name: "Logical Reasoning Shortcuts", icon: "fa-puzzle-piece", author: "CareerRide", gfgLink: "https://www.geeksforgeeks.org/logical-reasoning/", video: "https://www.youtube.com/playlist?list=PLpyc33gOcbVADMKqylI__O_Oqm6MXZgxb", noteName: "Logical_Reasoning_Patterns.pdf" },
+                    { name: "Verbal Ability Tricks & Prep", icon: "fa-font", author: "TsMadaan", gfgLink: "https://www.geeksforgeeks.org/verbal-ability/", video: "https://www.youtube.com/playlist?list=PLpyc33gOcbVBi3Gst78M7N85H81XmD0L0", noteName: "Verbal_Ability_Vocabulary.pdf" },
+                    { name: "Data Interpretation (DI Basics to Advanced)", icon: "fa-chart-pie", author: "Adda247", gfgLink: "https://www.geeksforgeeks.org/data-interpretation/", video: "https://www.youtube.com/playlist?list=PLpyc33gOcbVBlY_scR7w6tqscZ8zD8f9A", noteName: "DI_Graphs_Pies_PracticeSet.pdf" }
                 ]
             }
         };
 
-        // Download Prompt Logic Trigger
         function triggerDownload(fileName) {
-            alert(`📥 Initiating secure system download via EduPulse CDNs for file: \n👉 ${fileName}\n\n[In production environment, this link hooks to your AWS S3 buckets or local system directories]`);
+            alert(`📥 Secure Handshake Complete.\nDownloading Verification Module:\n👉 ${fileName}\n\n[Production Integration: Link this handler directly to your cloud asset buckets]`);
+        }
+     function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            if (body.classList.contains('theme-dark')) {
+                body.classList.remove('theme-dark');
+                body.classList.add('theme-light');
+                icon.innerHTML = `<i class="fa-solid fa-sun text-md"></i>`;
+                icon.className = "p-2.5 rounded-xl bg-white hover:bg-gray-100 border border-gray-200 transition-all text-orange-500 shadow-sm";
+            } else {
+                body.classList.remove('theme-light');
+                body.classList.add('theme-dark');
+                icon.innerHTML = `<i class="fa-solid fa-moon text-md"></i>`;
+                icon.className = "p-2.5 rounded-xl bg-gray-800/40 hover:bg-gray-700/50 border border-gray-700/50 transition-all text-amber-400";
+            }
         }
 
-        // Active tab render manager
         function switchTab(streamKey) {
-            // Update Active Styling on Sidebar Menu Buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active-link'));
-            document.getElementById(`btn-${streamKey}`).classList.add('active-link');
+            const desktopBtn = document.getElementById(`btn-${streamKey}`);
+            if (desktopBtn) desktopBtn.classList.add('active-link');
 
             const currentData = courseData[streamKey];
 
-            // Render Header texts dynamic changes
+            document.getElementById('stream-tag').innerText = currentData.tag;
             document.getElementById('dashboard-title').innerText = currentData.title + " Dashboard";
             document.getElementById('dashboard-desc').innerText = currentData.desc;
 
-            // Render Dynamic Cards layout
             const container = document.getElementById('cards-container');
             
-            // Fast CSS Refresh Trigger reset animation loop 
-            container.classList.remove('fade-in');
+            container.classList.remove('fade-in-up');
             void container.offsetWidth; 
-            container.classList.add('fade-in');
+            container.classList.add('fade-in-up');
 
-            container.innerHTML = ""; // Wipe content clean safely
+            container.innerHTML = "";
 
             currentData.subjects.forEach(subj => {
                 const cardHTML = `
-                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-[280px]">
+                    <div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-[310px] glow-${currentData.colorKey}">
                         <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="p-3 bg-gray-800/80 rounded-xl border border-gray-700/50">
-                                    <i class="fa-solid ${subj.icon} text-xl text-indigo-400"></i>
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="p-3 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400">
+                                    <i class="fa-solid ${subj.icon} text-xl"></i>
                                 </div>
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                                    ${subj.lectures}
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+                                    📺 ${subj.author}
                                 </span>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-2">${subj.name}</h3>
-                            <p class="text-xs text-gray-400">Essential core principles structured explicitly for 2026 tech evaluation benchmarks.</p>
+                            <h3 class="text-md font-bold mb-2 line-clamp-2 tracking-tight">${subj.name}</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Curated explicitly from top tier industry educators to optimize your preparation timelines for elite technical product sprints.</p>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-800/80">
-                            <a href="${subj.link}" target="_blank" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-indigo-600/10">
-                                <i class="fa-solid fa-play"></i> Watch Lectures
+                        <div class="flex flex-col gap-2 pt-3 border-t border-gray-800/40">
+                            <div class="grid grid-cols-2 gap-2">
+                                <a href="${subj.video}" target="_blank" class="flex items-center justify-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold py-2 px-3 rounded-lg transition-all shadow-sm">
+                                    <i class="fa-solid fa-play text-[10px]"></i> Open Playlist
+                                </a>
+                                <button onclick="triggerDownload('${subj.noteName}')" class="flex items-center justify-center gap-1.5 bg-gray-800/40 hover:bg-gray-700/60 text-gray-300 text-[11px] font-bold py-2 px-3 rounded-lg border border-gray-700/40 transition-all">
+                                    <i class="fa-solid fa-download text-[10px] text-emerald-400"></i> Get Notes
+                                </button>
+                            </div>
+                            <a href="${subj.gfgLink}" target="_blank" class="flex items-center justify-center gap-1.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 text-[11px] font-bold py-1.5 px-3 rounded-lg border border-emerald-500/20 transition-all">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Practice on GeeksforGeeks
                             </a>
-                            <button onclick="triggerDownload('${subj.noteName}')" class="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold py-2.5 px-4 rounded-xl border border-gray-700 transition-all">
-                                <i class="fa-solid fa-download text-emerald-400"></i> Get Notes PDF
-                            </button>
                         </div>
                     </div>
                 `;
@@ -249,7 +343,6 @@
             });
         }
 
-        // Initialize Application Content Load State on default profile selection 
         window.onload = () => {
             switchTab('cse');
         };
