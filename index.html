@@ -1,211 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Student Resource Hub</title>
-  <style>
-    /* Reset and basic styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StudyHub - Computer Science & Engineering Resources</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<!-- Bootstrap CSS for responsiveness -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<style>
+/* Reset and base styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+}
 
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ece9e6, #ffffff);
-      color: #333;
-      line-height: 1.6;
-    }
+/* Animated background */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  z-index: -1;
+}
 
-    /* Header styles with animation */
-    header {
-      background-color: #4CAF50;
-      padding: 20px;
-      text-align: center;
-      color: white;
-      position: sticky;
-      top: 0;
-      animation: slideDown 1s ease-in-out;
-    }
+/* Keyframes for animated background */
+@keyframes gradientAnimation {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
 
-    @keyframes slideDown {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+/* Hero styles */
+.hero {
+  background: rgba(0,0,0,0.4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
 
-    h1 {
-      font-size: 2em;
-    }
+/* Hover effects */
+.hover-zoom:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+.hover-shadow:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  transition: box-shadow 0.3s ease;
+}
 
-    /* Container for main content */
-    .container {
-      padding: 20px;
-    }
+/* Card styles */
+.card {
+  border-radius: 15px;
+}
 
-    /* Course cards styles */
-    .courses {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 300px;
-      padding: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    /* Dashboard styles */
-    #dashboard {
-      display: none;
-      margin-top: 20px;
-    }
-
-    /* Resources section */
-    .resources {
-      margin-top: 20px;
-    }
-
-    .resource-item {
-      background: #f9f9f9;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    /* Responsive design */
-    @media (max-width: 900px) {
-      .courses {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-  </style>
+/* Responsive adjustments */
+@media(max-width: 768px){
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Student Resource Hub (2026)</h1>
-  </header>
+<!-- Animated Background -->
+<div class="animated-background"></div>
 
+<!-- Header -->
+<header class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg sticky-top">
   <div class="container">
-    <h2>Choose Your Course</h2>
-    <div class="courses" id="courseContainer">
-      <!-- Course cards will be generated here -->
+    <a class="navbar-brand" href="#">StudyHub</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="#placement">Placement</a></li>
+        <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+      </ul>
     </div>
+  </div>
+</header>
 
-    <!-- Dashboard Button -->
-    <button id="viewDashboardBtn" style="margin-top:20px;">Go to Dashboard</button>
+<!-- Hero Section -->
+<section class="hero text-center text-white py-5">
+  <div class="container">
+    <h1 class="display-4">Empowering Future Innovators</h1>
+    <p class="lead">Your one-stop platform for Computer Science, Data Science, AI, and Engineering courses</p>
+    <a href="#courses" class="btn btn-primary btn-lg mt-3">Explore Courses</a>
+  </div>
+</section>
 
-    <!-- Dashboard Section -->
-    <div id="dashboard">
-      <h2>Your Dashboard</h2>
-      <p>Welcome to your personalized dashboard! Track your progress, access resources, and more.</p>
-      
-      <div class="resources" id="resources">
-        <h3>Resources</h3>
-        <!-- Resources will load here -->
+<!-- Courses Section -->
+<section id="courses" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Courses & Subjects</h2>
+    <div class="row g-4">
+      <!-- Course Card: CS -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow hover-zoom">
+          <div class="card-body text-center">
+            <h5 class="card-title">Computer Science & Engineering</h5>
+            <p class="card-text">Core concepts, programming, algorithms, and more.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#csModal">View Details</button>
+          </div>
+        </div>
+      </div>
+      <!-- Data Science -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow hover-zoom">
+          <div class="card-body text-center">
+            <h5 class="card-title">Data Science</h5>
+            <p class="card-text">Data analysis, visualization, and machine learning.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#dsModal">View Details</button>
+          </div>
+        </div>
+      </div>
+      <!-- AI/ML -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow hover-zoom">
+          <div class="card-body text-center">
+            <h5 class="card-title">AI & Machine Learning</h5>
+            <p class="card-text">Deep learning, neural networks, and AI concepts.</p>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#aimlModal">View Details</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <script>
-    // Sample data for courses and resources
-    const courses = [
-      { name: "Computer Science & Engineering", subjects: ["Algorithms", "Data Structures", "DBMS", "Operating System"], resources: [
-        { title: "Notes - Data Structures", type: "Notes", link: "https://example.com/ds-notes.pdf" },
-        { title: "Video Lecture - Algorithms", type: "Video", link: "https://youtube.com/algorithms" }
-      ]},
-      { name: "Information Science", subjects: ["Networking", "Cybersecurity", "Information Theory"], resources: [
-        { title: "Notes - Networking", type: "Notes", link: "https://example.com/networking.pdf" },
-        { title: "Video Lecture - Cybersecurity", type: "Video", link: "https://youtube.com/cybersecurity" }
-      ]},
-      { name: "AI & Machine Learning", subjects: ["Supervised Learning", "Neural Networks", "NLP"], resources: [
-        { title: "Notes - ML Basics", type: "Notes", link: "https://example.com/ml-notes.pdf" },
-        { title: "Video Lecture - Neural Networks", type: "Video", link: "https://youtube.com/neuralnetworks" }
-      ]},
-      { name: "Data Science", subjects: ["Statistics", "Data Visualization", "Big Data"], resources: [
-        { title: "Notes - Statistics", type: "Notes", link: "https://example.com/statistics.pdf" },
-        { title: "Video Lecture - Data Visualization", type: "Video", link: "https://youtube.com/datavis" }
-      ]}
-    ];
+<!-- Modals for Course Details -->
+<!-- CS Modal -->
+<div class="modal fade" id="csModal" tabindex="-1" aria-labelledby="csModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="csModalLabel">Computer Science & Engineering Resources</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Core Subjects</h6>
+        <ul>
+          <li><a href="#">Programming Languages</a></li>
+          <li><a href="#">Data Structures & Algorithms</a></li>
+          <li><a href="#">Operating Systems</a></li>
+          <li><a href="#">Database Systems</a></li>
+        </ul>
+        <h6>YouTube Tutorials</h6>
+        <ul>
+          <li><a href="https://youtube.com/..." target="_blank">CS Playlist 1</a></li>
+          <li><a href="https://youtube.com/..." target="_blank">CS Playlist 2</a></li>
+        </ul>
+        <h6>Notes & Downloads</h6>
+        <a href="#" class="btn btn-sm btn-outline-primary mb-2">Download Notes</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    const courseContainer = document.getElementById('courseContainer');
-    const dashboard = document.getElementById('dashboard');
-    const resourcesDiv = document.getElementById('resources');
-    const viewDashboardBtn = document.getElementById('viewDashboardBtn');
+<!-- Data Science Modal -->
+<div class="modal fade" id="dsModal" tabindex="-1" aria-labelledby="dsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dsModalLabel">Data Science Resources</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Core Topics</h6>
+        <ul>
+          <li><a href="#">Data Analysis</a></li>
+          <li><a href="#">Data Visualization</a></li>
+          <li><a href="#">Machine Learning Algorithms</a></li>
+        </ul>
+        <h6>YouTube Tutorials</h6>
+        <ul>
+          <li><a href="https://youtube.com/..." target="_blank">Data Science Playlist 1</a></li>
+        </ul>
+        <h6>Notes & Downloads</h6>
+        <a href="#" class="btn btn-sm btn-outline-primary mb-2">Download Notes</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    // Generate course cards dynamically
-    courses.forEach((course, index) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `<h3>${course.name}</h3><p>Subjects: ${course.subjects.join(', ')}</p>`;
-      
-      // Add click event
-      card.addEventListener('click', () => {
-        showResources(course);
-      });
-      
-      courseContainer.appendChild(card);
-    });
+<!-- AI/ML Modal -->
+<div class="modal fade" id="aimlModal" tabindex="-1" aria-labelledby="aimlModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aimlModalLabel">AI & Machine Learning Resources</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Core Topics</h6>
+        <ul>
+          <li><a href="#">Neural Networks</a></li>
+          <li><a href="#">Deep Learning</a></li>
+          <li><a href="#">Reinforcement Learning</a></li>
+        </ul>
+        <h6>YouTube Tutorials</h6>
+        <ul>
+          <li><a href="https://youtube.com/..." target="_blank">AI & ML Playlist</a></li>
+        </ul>
+        <h6>Notes & Downloads</h6>
+        <a href="#" class="btn btn-sm btn-outline-primary mb-2">Download Notes</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    // Show resources when course is clicked
-    function showResources(course) {
-      resourcesDiv.innerHTML = `<h3>Resources for ${course.name}</h3>`;
-      course.resources.forEach(res => {
-        const resItem = document.createElement('div');
-        resItem.className = 'resource-item';
-        resItem.innerHTML = `
-          <div>
-            <strong>${res.title}</strong><br/>
-            <em>${res.type}</em>
-          </div>
-          <a href="${res.link}" target="_blank">
-            <button>Download/View</button>
-          </a>
-        `;
-        resourcesDiv.appendChild(resItem);
-      });
-    }
+<!-- Dashboard Section -->
+<section id="dashboard" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Student Dashboard (2026 Outlook)</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card p-3 shadow bg-info text-white hover-shadow">
+          <h5 class="card-title text-center">Placement Prep</h5>
+          <p class="card-text">Practice aptitude, reasoning, interview tips, and mock tests.</p>
+          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Start Practice</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 shadow bg-success text-white hover-shadow">
+          <h5 class="card-title text-center">Career Resources</h5>
+          <p class="card-text">Resume building, interview guidance, and industry trends.</p>
+          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Explore</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 shadow bg-warning text-dark hover-shadow">
+          <h5 class="card-title text-center">Skills Development</h5>
+          <p class="card-text">Learn new skills, certifications, and online courses.</p>
+          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Dashboard button event
-    document.getElementById('viewDashboardBtn').addEventListener('click', () => {
-      document.querySelector('.container').style.display = 'none';
-      dashboard.style.display = 'block';
-    });
-  </script>
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <p>&copy; 2024 StudyHub. All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Placeholder for future interactions
+</script>
 </body>
-</html>
+  </html>
