@@ -1,389 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Student Learning Hub 2026</title>
-<!-- Google Fonts for better typography -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-<style>
-  /* Reset some default styles */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* Body with animated background */
-  body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5, #ffd700, #ff69b4);
-    background-size: 600% 600%;
-    animation: gradientBackground 20s ease infinite;
-    color: #333;
-    min-height: 100vh;
-  }
-
-  @keyframes gradientBackground {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
-
-  /* Header styles with animation */
-  header {
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    font-family: 'Orbitron', sans-serif;
-    animation: slideDown 1s ease;
-  }
-
-  @keyframes slideDown {
-    from {transform: translateY(-50px); opacity: 0;}
-    to {transform: translateY(0); opacity: 1;}
-  }
-
-  header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    color: #fffacd;
-    animation: pulse 2s infinite;
-  }
-
-  header p {
-    font-size: 1.2em;
-  }
-
-  /* Navigation styles with hover effect and animation */
-  nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: rgba(51, 51, 51, 0.8);
-    padding: 10px 0;
-  }
-
-  nav button {
-    background: #fff;
-    border: none;
-    padding: 12px 20px;
-    margin: 8px;
-    cursor: pointer;
-    font-size: 1em;
-    border-radius: 25px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-  }
-
-  nav button:hover {
-    background-color: #ffd700;
-    color: #fff;
-    transform: scale(1.05);
-  }
-
-  /* Main container styles */
-  .container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  /* Sections */
-  .section {
-    display: none;
-    animation: fadeInPage 1s ease;
-  }
-
-  .section.active {
-    display: block;
-  }
-
-  @keyframes fadeInPage {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-
-  /* Dashboard styles with animated cards */
-  #dashboard h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2em;
-    color: #fff;
-    text-shadow: 2px 2px 4px #000;
-  }
-
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
-
-  .dash-card {
-    background: rgba(255,255,255,0.8);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .dash-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-  }
-
-  .dash-card h3 {
-    margin-bottom: 10px;
-    color: #222;
-  }
-
-  .progress-bar {
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 20px;
-    margin-top: 10px;
-  }
-
-  .progress {
-    background-color: #4caf50;
-    height: 100%;
-    width: 0%;
-    transition: width 1s;
-  }
-
-  /* Subject cards for Courses section */
-  .card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    margin: 15px 0;
-    padding: 20px;
-    transition: transform 0.3s;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-  }
-
-  h3 {
-    margin-bottom: 15px;
-    color: #222;
-  }
-
-  /* List styles */
-  ul {
-    list-style: none;
-  }
-
-  li {
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-  }
-
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
-  /* Footer styling with animation */
-  footer {
-    text-align: center;
-    padding: 15px;
-    background-color: rgba(0,0,0,0.6);
-    color: #fff;
-    margin-top: 30px;
-    font-family: 'Orbitron', sans-serif;
-    animation: slideUp 1s ease;
-  }
-
-  @keyframes slideUp {
-    from {transform: translateY(50px); opacity: 0;}
-    to {transform: translateY(0); opacity: 1;}
-  }
-
-  /* Responsive styles */
-  @media(max-width: 768px) {
-    nav {
-      flex-direction: column;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Resource Hub</title>
+  <style>
+    /* Reset and basic styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    nav button {
-      width: 90%;
-      margin: 10px 0;
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      color: #333;
+      line-height: 1.6;
     }
-  }
-</style>
+
+    /* Header styles with animation */
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      position: sticky;
+      top: 0;
+      animation: slideDown 1s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    /* Container for main content */
+    .container {
+      padding: 20px;
+    }
+
+    /* Course cards styles */
+    .courses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    /* Dashboard styles */
+    #dashboard {
+      display: none;
+      margin-top: 20px;
+    }
+
+    /* Resources section */
+    .resources {
+      margin-top: 20px;
+    }
+
+    .resource-item {
+      background: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive design */
+    @media (max-width: 900px) {
+      .courses {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Student Resource Hub (2026)</h1>
+  </header>
 
-<header>
-  <h1>Student Learning Hub 2026</h1>
-  <p>Empowering Future Engineers & Data Scientists</p>
-</header>
+  <div class="container">
+    <h2>Choose Your Course</h2>
+    <div class="courses" id="courseContainer">
+      <!-- Course cards will be generated here -->
+    </div>
 
-<nav>
-  <button onclick="showSection('dashboard')">Dashboard</button>
-  <button onclick="showSection('courses')">Courses</button>
-  <button onclick="showSection('resources')">Resources</button>
-  <button onclick="showSection('about')">About</button>
-</nav>
+    <!-- Dashboard Button -->
+    <button id="viewDashboardBtn" style="margin-top:20px;">Go to Dashboard</button>
 
-<div class="container">
-
-  <!-- Dashboard: Data analytic concept -->
-  <section id="dashboard" class="section active">
-    <h2>Subject Progress Dashboard</h2>
-    <div class="dashboard-grid">
-      <!-- Example subjects with progress -->
-      <div class="dash-card">
-        <h3>Computer Science & Engineering</h3>
-        <div class="progress-bar"><div class="progress" style="width:70%"></div></div>
-        <p>Progress: 70%</p>
-      </div>
-      <div class="dash-card">
-        <h3>Information Science</h3>
-        <div class="progress-bar"><div class="progress" style="width:55%"></div></div>
-        <p>Progress: 55%</p>
-      </div>
-      <div class="dash-card">
-        <h3>AI & ML</h3>
-        <div class="progress-bar"><div class="progress" style="width:40%"></div></div>
-        <p>Progress: 40%</p>
-      </div>
-      <div class="dash-card">
-        <h3>Data Science</h3>
-        <div class="progress-bar"><div class="progress" style="width:65%"></div></div>
-        <p>Progress: 65%</p>
-      </div>
-      <div class="dash-card">
-        <h3>Aptitude & Reasoning</h3>
-        <div class="progress-bar"><div class="progress" style="width:80%"></div></div>
-        <p>Progress: 80%</p>
-      </div>
-      <div class="dash-card">
-        <h3>Core Subjects</h3>
-        <div class="progress-bar"><div class="progress" style="width:50%"></div></div>
-        <p>Progress: 50%</p>
+    <!-- Dashboard Section -->
+    <div id="dashboard">
+      <h2>Your Dashboard</h2>
+      <p>Welcome to your personalized dashboard! Track your progress, access resources, and more.</p>
+      
+      <div class="resources" id="resources">
+        <h3>Resources</h3>
+        <!-- Resources will load here -->
       </div>
     </div>
-  </section>
-
-  <!-- Courses Section -->
-  <section id="courses" class="section">
-    <h2>Courses Overview</h2>
-    <!-- Subjects cards with more details -->
-    <div class="card">
-      <h3>Computer Science & Engineering</h3>
-      <ul>
-        <li><a href="#video1" onclick="showVideo('https://www.youtube.com/embed/8mAITcNt710')">Intro to CS</a></li>
-        <li><a href="#notes1" download>Download Notes (CS)</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Information Science</h3>
-      <ul>
-        <li><a href="#video2" onclick="showVideo('https://www.youtube.com/embed/O0XlI6GBsuA')">Intro to Info Science</a></li>
-        <li><a href="#notes2" download>Download Notes (Info Science)</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>AI & ML</h3>
-      <ul>
-        <li><a href="#video3" onclick="showVideo('https://www.youtube.com/embed/GwIo3gDZCVQ')">AI & ML Introduction</a></li>
-        <li><a href="#notes3" download>Download Notes (AI/ML)</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Data Science</h3>
-      <ul>
-        <li><a href="#video4" onclick="showVideo('https://www.youtube.com/embed/ua-CiDNNj30')">Data Science Basics</a></li>
-        <li><a href="#notes4" download>Download Notes (Data Science)</a></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Aptitude & Reasoning</h3>
-      <ul>
-        <li><a href="#video5" onclick="showVideo('https://www.youtube.com/embed/U94z4k7zHBY')">Aptitude Practice</a></li>
-        <li><a href="#notes5" download>Download Aptitude Notes</a></li>
-      </ul>
-    </div>
-    <!-- Additional subjects for students -->
-    <div class="card">
-      <h3>Core Subjects</h3>
-      <ul>
-        <li><a href="#video6" onclick="showVideo('https://www.youtube.com/embed/0V7QXkJ6aNc')">Mathematics</a></li>
-        <li><a href="#video7" onclick="showVideo('https://www.youtube.com/embed/ZXy8tG4o7vE')">Physics</a></li>
-        <li><a href="#video8" onclick="showVideo('https://www.youtube.com/embed/0QpZ4j8wQ9A')">Chemistry</a></li>
-        <li><a href="#video9" onclick="showVideo('https://www.youtube.com/embed/2-LxHc7D2h4')">English & Communication</a></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Resources Section -->
-  <section id="resources" class="section">
-    <h2>Useful Resources</h2>
-    <ul>
-      <li><a href="https://www.geeksforgeeks.org/" target="_blank">GeeksforGeeks</a></li>
-      <li><a href="https://www.coursera.org/" target="_blank">Coursera</a></li>
-      <li><a href="https://edx.org/" target="_blank">edX</a></li>
-      <li><a href="https://www.khanacademy.org/" target="_blank">Khan Academy</a></li>
-      <li><a href="https://www.udemy.com/" target="_blank">Udemy</a></li>
-    </ul>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="section">
-    <h2>About This Platform</h2>
-    <p>This platform helps students learn core subjects, develop skills, and prepare for placements with resources, videos, and progress tracking. Designed for students aiming for success in 2026 and beyond.</p>
-  </section>
-</div>
-
-<!-- Video Modal for embedded videos -->
-<div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1001;">
-  <div style="background:#fff; padding:20px; max-width:800px; width:90%; border-radius:10px; position:relative;">
-    <button style="position:absolute; top:10px; right:10px; background:#f44; color:#fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;" onclick="closeVideo()">Close</button>
-    <iframe id="videoFrame" width="100%" height="450" src="" frameborder="0" allowfullscreen></iframe>
   </div>
-</div>
 
-<footer>
-  &copy; 2026 Student Learning Hub | Designed with 💖 for students' success
-</footer>
+  <script>
+    // Sample data for courses and resources
+    const courses = [
+      { name: "Computer Science & Engineering", subjects: ["Algorithms", "Data Structures", "DBMS", "Operating System"], resources: [
+        { title: "Notes - Data Structures", type: "Notes", link: "https://example.com/ds-notes.pdf" },
+        { title: "Video Lecture - Algorithms", type: "Video", link: "https://youtube.com/algorithms" }
+      ]},
+      { name: "Information Science", subjects: ["Networking", "Cybersecurity", "Information Theory"], resources: [
+        { title: "Notes - Networking", type: "Notes", link: "https://example.com/networking.pdf" },
+        { title: "Video Lecture - Cybersecurity", type: "Video", link: "https://youtube.com/cybersecurity" }
+      ]},
+      { name: "AI & Machine Learning", subjects: ["Supervised Learning", "Neural Networks", "NLP"], resources: [
+        { title: "Notes - ML Basics", type: "Notes", link: "https://example.com/ml-notes.pdf" },
+        { title: "Video Lecture - Neural Networks", type: "Video", link: "https://youtube.com/neuralnetworks" }
+      ]},
+      { name: "Data Science", subjects: ["Statistics", "Data Visualization", "Big Data"], resources: [
+        { title: "Notes - Statistics", type: "Notes", link: "https://example.com/statistics.pdf" },
+        { title: "Video Lecture - Data Visualization", type: "Video", link: "https://youtube.com/datavis" }
+      ]}
+    ];
 
-<script>
-  function showSection(sectionId) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(sec => sec.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-  }
+    const courseContainer = document.getElementById('courseContainer');
+    const dashboard = document.getElementById('dashboard');
+    const resourcesDiv = document.getElementById('resources');
+    const viewDashboardBtn = document.getElementById('viewDashboardBtn');
 
-  function showVideo(url) {
-    document.getElementById('videoFrame').src = url + "?autoplay=1";
-    document.getElementById('videoModal').style.display = 'flex';
-  }
-
-  function closeVideo() {
-    document.getElementById('videoFrame').src = '';
-    document.getElementById('videoModal').style.display = 'none';
-  }
-
-  // Animate progress bars on page load
-  window.onload = () => {
-    document.querySelectorAll('.progress').forEach(bar => {
-      const width = bar.style.width;
-      bar.style.width = '0%';
-      setTimeout(() => { bar.style.width = width; }, 100);
+    // Generate course cards dynamically
+    courses.forEach((course, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h3>${course.name}</h3><p>Subjects: ${course.subjects.join(', ')}</p>`;
+      
+      // Add click event
+      card.addEventListener('click', () => {
+        showResources(course);
+      });
+      
+      courseContainer.appendChild(card);
     });
-  };
-</script>
+
+    // Show resources when course is clicked
+    function showResources(course) {
+      resourcesDiv.innerHTML = `<h3>Resources for ${course.name}</h3>`;
+      course.resources.forEach(res => {
+        const resItem = document.createElement('div');
+        resItem.className = 'resource-item';
+        resItem.innerHTML = `
+          <div>
+            <strong>${res.title}</strong><br/>
+            <em>${res.type}</em>
+          </div>
+          <a href="${res.link}" target="_blank">
+            <button>Download/View</button>
+          </a>
+        `;
+        resourcesDiv.appendChild(resItem);
+      });
+    }
+
+    // Dashboard button event
+    document.getElementById('viewDashboardBtn').addEventListener('click', () => {
+      document.querySelector('.container').style.display = 'none';
+      dashboard.style.display = 'block';
+    });
+  </script>
 </body>
-  </html>
+</html>
