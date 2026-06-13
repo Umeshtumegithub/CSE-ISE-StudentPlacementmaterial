@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>StudyHub - Computer Science & Engineering Resources</title>
+<title>StudyHub - CSE & Data Science Resources</title>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-<!-- Bootstrap CSS for responsiveness -->
+<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <style>
 /* Reset and base styles */
@@ -14,73 +14,139 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  position: relative;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Animated background */
-.animated-background {
+/* Animated gradient background */
+body::before {
+  content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+  background-size: 600% 600%;
+  animation: gradientBG 20s ease infinite;
   z-index: -1;
 }
 
-/* Keyframes for animated background */
-@keyframes gradientAnimation {
+@keyframes gradientBG {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
 
-/* Hero styles */
+/* Header styles */
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.3);
+}
+
+.navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.nav-link {
+  color: #fff !important;
+  font-weight: 500;
+}
+.nav-link:hover {
+  color: #ffd700 !important;
+}
+
+/* Hero section styles */
 .hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
   background: rgba(0,0,0,0.4);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.btn-hero {
+  font-size: 1.2rem;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+.btn-hero:hover {
+  background-color: #ffd700;
+  color: #000;
 }
 
-/* Hover effects */
-.hover-zoom:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
+/* Section styles */
+section {
+  padding: 60px 20px;
 }
-.hover-shadow:hover {
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  transition: box-shadow 0.3s ease;
+section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
 }
 
-/* Card styles */
+/* Course cards styles */
 .card {
   border-radius: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
 
-/* Responsive adjustments */
-@media(max-width: 768px){
-  .hero h1 {
-    font-size: 2rem;
-  }
+/* Dashboard cards styles */
+.dashboard-card {
+  border-radius: 15px;
+  padding: 20px;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.dashboard-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+.bg-info { background-color: #17a2b8 !important; }
+.bg-success { background-color: #28a745 !important; }
+.bg-warning { background-color: #ffc107 !important; color: #212529; }
+.text-shadow {
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+/* Footer styles */
+footer {
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  padding: 20px;
+  color: #fff;
 }
 </style>
 </head>
 <body>
-<!-- Animated Background -->
-<div class="animated-background"></div>
 
-<!-- Header -->
-<header class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg sticky-top">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#">StudyHub</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
         <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
         <li class="nav-item"><a class="nav-link" href="#placement">Placement</a></li>
@@ -88,49 +154,49 @@ body {
       </ul>
     </div>
   </div>
-</header>
+</nav>
 
-<!-- Hero Section -->
-<section class="hero text-center text-white py-5">
+<!-- Hero -->
+<section class="hero">
   <div class="container">
-    <h1 class="display-4">Empowering Future Innovators</h1>
-    <p class="lead">Your one-stop platform for Computer Science, Data Science, AI, and Engineering courses</p>
-    <a href="#courses" class="btn btn-primary btn-lg mt-3">Explore Courses</a>
+    <h1>Empowering Future Innovators</h1>
+    <p>Your one-stop platform for Computer Science, Data Science, AI, and Engineering courses</p>
+    <a href="#courses" class="btn btn-primary btn-hero">Explore Courses</a>
   </div>
 </section>
 
 <!-- Courses Section -->
-<section id="courses" class="py-5 bg-light">
+<section id="courses" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius:20px;">
+  <h2>Courses & Subjects</h2>
   <div class="container">
-    <h2 class="text-center mb-4">Courses & Subjects</h2>
-    <div class="row g-4">
-      <!-- CS -->
+    <div class="row g-4 justify-content-center">
+      <!-- CS Course -->
       <div class="col-md-4">
-        <div class="card h-100 shadow hover-zoom">
-          <div class="card-body text-center">
+        <div class="card bg-transparent text-white h-100 shadow-hover">
+          <div class="card-body d-flex flex-column justify-content-between align-items-center text-center p-4">
             <h5 class="card-title">Computer Science & Engineering</h5>
             <p class="card-text">Core concepts, programming, algorithms, and more.</p>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#csModal">View Details</button>
+            <button class="btn btn-outline-light mt-3" data-bs-toggle="modal" data-bs-target="#csModal">View Details</button>
           </div>
         </div>
       </div>
-      <!-- Data Science -->
+      <!-- Data Science Course -->
       <div class="col-md-4">
-        <div class="card h-100 shadow hover-zoom">
-          <div class="card-body text-center">
+        <div class="card bg-transparent text-white h-100 shadow-hover">
+          <div class="card-body d-flex flex-column justify-content-between align-items-center text-center p-4">
             <h5 class="card-title">Data Science</h5>
             <p class="card-text">Data analysis, visualization, and machine learning.</p>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#dsModal">View Details</button>
+            <button class="btn btn-outline-light mt-3" data-bs-toggle="modal" data-bs-target="#dsModal">View Details</button>
           </div>
         </div>
       </div>
-      <!-- AI/ML -->
+      <!-- AI/ML Course -->
       <div class="col-md-4">
-        <div class="card h-100 shadow hover-zoom">
-          <div class="card-body text-center">
+        <div class="card bg-transparent text-white h-100 shadow-hover">
+          <div class="card-body d-flex flex-column justify-content-between align-items-center text-center p-4">
             <h5 class="card-title">AI & Machine Learning</h5>
             <p class="card-text">Deep learning, neural networks, and AI concepts.</p>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#aimlModal">View Details</button>
+            <button class="btn btn-outline-light mt-3" data-bs-toggle="modal" data-bs-target="#aimlModal">View Details</button>
           </div>
         </div>
       </div>
@@ -220,29 +286,32 @@ body {
 </div>
 
 <!-- Dashboard Section -->
-<section id="dashboard" class="py-5">
+<section id="dashboard" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius:20px;">
+  <h2>Student Dashboard (2026 Outlook)</h2>
   <div class="container">
-    <h2 class="text-center mb-4">Student Dashboard (2026 Outlook)</h2>
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
+      <!-- Placement Prep -->
       <div class="col-md-4">
-        <div class="card p-3 shadow bg-info text-white hover-shadow">
-          <h5 class="card-title text-center">Placement Prep</h5>
-          <p class="card-text">Practice aptitude, reasoning, interview tips, and mock tests.</p>
-          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Start Practice</a>
+        <div class="dashboard-card bg-info">
+          <h5 class="text-center mb-3">Placement Prep</h5>
+          <p>Practice aptitude, reasoning, interview tips, and mock tests.</p>
+          <a href="#" class="btn btn-outline-light w-100 mt-3">Start Practice</a>
         </div>
       </div>
+      <!-- Career Resources -->
       <div class="col-md-4">
-        <div class="card p-3 shadow bg-success text-white hover-shadow">
-          <h5 class="card-title text-center">Career Resources</h5>
-          <p class="card-text">Resume building, interview guidance, and industry trends.</p>
-          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Explore</a>
+        <div class="dashboard-card bg-success">
+          <h5 class="text-center mb-3">Career Resources</h5>
+          <p>Resume building, interview guidance, and industry trends.</p>
+          <a href="#" class="btn btn-outline-light w-100 mt-3">Explore</a>
         </div>
       </div>
+      <!-- Skills Development -->
       <div class="col-md-4">
-        <div class="card p-3 shadow bg-warning text-dark hover-shadow">
-          <h5 class="card-title text-center">Skills Development</h5>
-          <p class="card-text">Learn new skills, certifications, and online courses.</p>
-          <a href="#" class="btn btn-light btn-sm mx-auto d-block">Get Started</a>
+        <div class="dashboard-card bg-warning text-dark">
+          <h5 class="text-center mb-3">Skills Development</h5>
+          <p>Learn new skills, certifications, and online courses.</p>
+          <a href="#" class="btn btn-outline-dark w-100 mt-3">Get Started</a>
         </div>
       </div>
     </div>
@@ -250,14 +319,11 @@ body {
 </section>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
+<footer>
   <p>&copy; 2024 StudyHub. All rights reserved.</p>
 </footer>
 
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Placeholder for future interactions
-</script>
 </body>
-          </html>
+  </html>
